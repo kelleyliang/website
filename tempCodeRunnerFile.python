@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Fourier series function for triangular wave
+def triangular_wave_fourier(t, n_terms, T=4, A=2):
+    result = np.zeros_like(t)  # Initialize result array
+    for n in range(1, 2*n_terms, 2):  # Sum over odd harmonics (1, 3, 5, ...)
+        result += (16 * A / (n**2 * np.pi**2)) * np.sin((n * np.pi / (T / 2)) * t)
+    return result
+
+# Time axis
+t = np.linspace(-2, 2, 1000)  # Time from -2 to 2 seconds
+
+# Plot for different numbers of Fourier terms
+plt.figure(figsize=(10, 6))  # Set figure size
+
+# Loop over the number of terms to plot
+for n_terms in [1, 2, 3, 4]:
+    y = triangular_wave_fourier(t, n_terms)
+    plt.plot(t, y, label=f'{n_terms} term(s)')
+
+# Configure plot
+plt.title('Fourier Series Approximation of a Triangular Wave')
+plt.xlabel('Time (t)')
+plt.ylabel('Amplitude')
+plt.axhline(0, color='black',linewidth=0.5)
+plt.grid(True)
+plt.legend()
+plt.show()
