@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mind Map Welcome Page</title>
+  <title>Dynamic Mind Map</title>
   <style>
     body {
       margin: 0;
@@ -36,21 +36,22 @@
       color: #333;
       border-radius: 20px;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease;
       font-weight: bold;
       font-size: 1rem;
       cursor: pointer;
       text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .node:hover {
-      transform: scale(1.2);
+      transform: translateY(-10px) scale(1.2);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 <body>
   <!-- Center Sketch -->
-  <div id="center">Kelley</div>
+  <div id="center">Your Name</div>
 
   <!-- Nodes -->
   <a href="about.html" class="node" style="top: 10%; left: 20%;">About</a>
@@ -59,29 +60,42 @@
   <a href="blog.html" class="node" style="bottom: 30%; right: 30%;">Blog</a>
 
   <script>
-    // JavaScript for floating animation
+    // Subtle floating animation
     const nodes = document.querySelectorAll(".node");
-    nodes.forEach((node) => {
-      let x = Math.random() * window.innerWidth;
-      let y = Math.random() * window.innerHeight;
-      let dx = (Math.random() - 0.5) * 2;
-      let dy = (Math.random() - 0.5) * 2;
 
-      function animate() {
+    nodes.forEach((node) => {
+      let x = parseFloat(node.style.left || Math.random() * window.innerWidth) || 0;
+      let y = parseFloat(node.style.top || Math.random() * window.innerHeight) || 0;
+      let dx = (Math.random() - 0.5) * 0.5; // Subtle movement
+      let dy = (Math.random() - 0.5) * 0.5;
+
+      function float() {
         x += dx;
         y += dy;
 
-        // Boundary detection
+        // Boundary detection to reverse direction
         if (x < 0 || x > window.innerWidth - node.offsetWidth) dx *= -1;
         if (y < 0 || y > window.innerHeight - node.offsetHeight) dy *= -1;
 
+        // Apply the new position
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
 
-        requestAnimationFrame(animate);
+        requestAnimationFrame(float);
       }
 
-      animate();
+      float();
+
+      // Increase movement on hover
+      node.addEventListener("mouseenter", () => {
+        dx *= 3; // Move faster
+        dy *= 3;
+      });
+
+      node.addEventListener("mouseleave", () => {
+        dx /= 3; // Slow down to normal
+        dy /= 3;
+      });
     });
   </script>
 </body>
