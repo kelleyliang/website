@@ -1,13 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mind Map Welcome Page</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #f4f4f9;
+      font-family: Arial, sans-serif;
+    }
+
+    #center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: "Courier New", monospace;
+      border: 3px solid #444;
+      padding: 20px;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .node {
+      position: absolute;
+      text-align: center;
+      padding: 10px 20px;
+      background-color: #ffdd57;
+      color: #333;
+      border-radius: 20px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .node:hover {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
-    <h1>About Us</h1>
-    <p>Welcome to the about page!</p>
-    <a href="index.html">Back to Home</a>
+  <!-- Center Sketch -->
+  <div id="center">Kelley</div>
+
+  <!-- Nodes -->
+  <a href="about.html" class="node" style="top: 10%; left: 20%;">About</a>
+  <a href="projects.html" class="node" style="top: 40%; right: 15%;">Projects</a>
+  <a href="contact.html" class="node" style="bottom: 20%; left: 25%;">Contact</a>
+  <a href="blog.html" class="node" style="bottom: 30%; right: 30%;">Blog</a>
+
+  <script>
+    // JavaScript for floating animation
+    const nodes = document.querySelectorAll(".node");
+    nodes.forEach((node) => {
+      let x = Math.random() * window.innerWidth;
+      let y = Math.random() * window.innerHeight;
+      let dx = (Math.random() - 0.5) * 2;
+      let dy = (Math.random() - 0.5) * 2;
+
+      function animate() {
+        x += dx;
+        y += dy;
+
+        // Boundary detection
+        if (x < 0 || x > window.innerWidth - node.offsetWidth) dx *= -1;
+        if (y < 0 || y > window.innerHeight - node.offsetHeight) dy *= -1;
+
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    });
+  </script>
 </body>
 </html>
